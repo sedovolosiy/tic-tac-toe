@@ -12,28 +12,20 @@ WIN_COMBINATIONS = [
   [0, 4, 8], # left_diagonal
   [6, 4, 2] # right_diagonal
 ].freeze
-
-def final_result(result)
-  if WIN_COMBINATIONS.include?(result['x'])
-    'x win'
-  elsif WIN_COMBINATIONS.include?(result['o'])
-    'o win'
-  else
-    'nothing win'
-  end
-end
+X_NAME = 'x'
+O_NAME = 'o'
 
 def who_won?(list)
   result = {
-    'x' => [],
-    'o' => []
+    X_NAME => [],
+    O_NAME => []
   }
   list.flatten.each_with_index do |item, idx|
     next if item.nil?
 
     result[item] << idx
+    return item if WIN_COMBINATIONS.include?(result[item])
   end
-  final_result(result)
 end
 
 x_win_diagonal = [['x', 'o', nil], [nil, 'x', 'o'], [nil, nil, 'x']]
