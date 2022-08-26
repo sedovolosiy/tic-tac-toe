@@ -2,7 +2,7 @@
 
 require 'debug'
 
-WIN_COMBINATIONS = [
+WIN_COMBINATIONS_LIST = [
   [0, 1, 2], # top_row
   [3, 4, 5], # middle_row
   [6, 7, 8], # bottom_row
@@ -24,7 +24,7 @@ def who_won?(list)
     next if item.nil?
 
     result[item] << idx
-    return item if WIN_COMBINATIONS.include?(result[item])
+    return item if WIN_COMBINATIONS_LIST.include?(result[item])
   end
 end
 
