@@ -43,5 +43,6 @@ _nothing_win = [['x', 'o', nil],
                 %w[x x o],
                 %w[o x o]]
 _x_one_step = [%w[x x o], [nil, nil, nil], [nil, nil, nil]]
+_x_y_win_vertical = [['x', nil, 'o'], ['x', nil, 'o'], ['x', nil, 'o']] # unreal case
 
 p who_won?(x_win_diagonal)
