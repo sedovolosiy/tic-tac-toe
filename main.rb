@@ -2,45 +2,38 @@
 
 require 'debug'
 
-def add_pos_steps(count_of_steps, idx, pos)
-  pos += idx
-  count_of_steps += 1
-  [pos, count_of_steps]
-end
+WIN_COMBINATIONS = [
+  [0, 1, 2], # top_row
+  [3, 4, 5], # middle_row
+  [6, 7, 8], # bottom_row
+  [0, 3, 6], # left_column
+  [1, 4, 7], # center_column
+  [2, 5, 8], # right_column
+  [0, 4, 8], # left_diagonal
+  [6, 4, 2] # right_diagonal
+].freeze
 
-def calc_position(line, o_pos, x_pos, count_of_steps)
-  line.each_with_index do |element, idx|
-    case element
-    when 'x'
-      x_pos, count_of_steps = add_pos_steps(count_of_steps, idx, x_pos)
-    when 'o'
-      o_pos, count_of_steps = add_pos_steps(count_of_steps, idx, o_pos)
-    end
-  end
-  [x_pos, o_pos, count_of_steps]
-end
-
-def result(o_pos, x_pos)
-  if (x_pos % 3).zero?
+def final_result(result)
+  if WIN_COMBINATIONS.include?(result['x'])
     'x win'
-  elsif (o_pos % 3).zero?
+  elsif WIN_COMBINATIONS.include?(result['o'])
     'o win'
+  else
+    'nothing win'
   end
 end
 
 def who_won?(list)
-  return if list.flatten.compact.empty?
+  result = {
+    'x' => [],
+    'o' => []
+  }
+  list.flatten.each_with_index do |item, idx|
+    next if item.nil?
 
-  count_of_steps = 0
-  x_pos = 0
-  o_pos = 0
-  list.each do |line|
-    next if line.compact.empty?
-
-    x_pos, o_pos, count_of_steps = calc_position(line, o_pos, x_pos, count_of_steps)
+    result[item] << idx
   end
-
-  result(o_pos, x_pos) if count_of_steps >= 3
+  final_result(result)
 end
 
 x_win_diagonal = [['x', 'o', nil], [nil, 'x', 'o'], [nil, nil, 'x']]
